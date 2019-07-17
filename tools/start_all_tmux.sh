@@ -49,7 +49,7 @@ else
     export ASR_ADDR_PORT="ws://localhost:$CMD_PORT"
 fi
 
-declare -a commandcenter=("CMD" "$(pwd)/../lucida/commandcenter/")
+# declare -a commandcenter=("CMD" "$(pwd)/../lucida/commandcenter/")
 declare -a questionanswering=("QA" "$(pwd)/../lucida/questionanswering/OpenEphyra/")
 declare -a imagematching=("IMM" "$(pwd)/../lucida/imagematching/opencv_imm/")
 declare -a calendar=("CA" "$(pwd)/../lucida/calendar/")
@@ -58,8 +58,8 @@ declare -a imageclassification=("IMC" "$(pwd)/../lucida/djinntonic/imc/")
 declare -a digitrecognition=("DIG" "$(pwd)/../lucida/djinntonic/dig/")
 declare -a facerecognition=("FACE" "$(pwd)/../lucida/djinntonic/face")
 declare -a weather=("WE" "$(pwd)/../lucida/weather")
-declare -a botframework=("BFI" "$(pwd)/../lucida/botframework-interface")
-declare -a musicservice=("MS" "$(pwd)/../lucida/musicservice")
+# declare -a botframework=("BFI" "$(pwd)/../lucida/botframework-interface")
+# declare -a musicservice=("MS" "$(pwd)/../lucida/musicservice")
 
 if [ "$1" == "test" ]; then
     declare -a services=(
@@ -78,8 +78,9 @@ services+=(
     digitrecognition
     facerecognition
     weather
-    botframework
-    musicservice)
+    #botframework
+    #musicservice
+    )
 
 # Create the session
 tmux new-session -s ${SESSION_NAME} -d

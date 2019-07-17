@@ -407,6 +407,7 @@ def main():
 			ws.connect()
 			ws.run_forever()
 		except Exception:
+			logger.error("Server: %s", args.uri)
 			logger.error("Couldn't connect to server, waiting for %d seconds", CONNECT_TIMEOUT)
 			time.sleep(CONNECT_TIMEOUT)
 		# fixes a race condition
