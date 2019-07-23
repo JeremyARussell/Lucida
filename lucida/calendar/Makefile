@@ -26,6 +26,9 @@ corenlp:
 start_server: 
 	./gradlew run
 
+start_server_debug: 
+	./gradlew run --stacktrace --debug
+
 start_test: 
 	cd CalendarClient; ./start-Calendar-client.sh 
 
