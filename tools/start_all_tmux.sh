@@ -53,7 +53,8 @@ fi
 declare -a questionanswering=("QA" "$(pwd)/../lucida/questionanswering/OpenEphyra/")
 declare -a imagematching=("IMM" "$(pwd)/../lucida/imagematching/opencv_imm/")
 declare -a calendar=("CA" "$(pwd)/../lucida/calendar/")
-declare -a speechrecognition=("ASR" "$(pwd)/../lucida/speechrecognition/kaldi_gstreamer_asr/")
+declare -a speechrecognition_server=("ASR_S" "$(pwd)/../lucida/speechrecognition/kaldi_gstreamer_asr/")
+declare -a speechrecognition_worker=("ASR_W" "$(pwd)/../lucida/speechrecognition/kaldi_gstreamer_asr/")
 declare -a imageclassification=("IMC" "$(pwd)/../lucida/djinntonic/imc/")
 declare -a digitrecognition=("DIG" "$(pwd)/../lucida/djinntonic/dig/")
 declare -a facerecognition=("FACE" "$(pwd)/../lucida/djinntonic/face")
@@ -66,8 +67,9 @@ if [ "$1" == "test" ]; then
         )
 else
     declare -a services=(
-        commandcenter
-        speechrecognition)
+        # commandcenter
+        speechrecognition_server
+        speechrecognition_worker)
 fi
 
 services+=(
@@ -97,11 +99,17 @@ do
         tmux new-window -n ${!NAME} -t ${SESSION_NAME}
     fi
     tmux send-keys -t ${SESSION_NAME}:$TMUX_WIN "cd ${!SERV_PATH}" C-m
-    if [ "$1" == "test" ]; then
-        tmux send-keys -t ${SESSION_NAME}:$TMUX_WIN "make start_test" C-m
+    
+    if [ "${!NAME}" == "ASR_S" ]; then
+        tmux send-keys -t ${SESSION_NAME}:$TMUX_WIN "make start_master_server" C-m
     else
-        tmux send-keys -t ${SESSION_NAME}:$TMUX_WIN "make start_server" C-m
+        if [ "$1" == "test" ]; then
+            tmux send-keys -t ${SESSION_NAME}:$TMUX_WIN "make start_test" C-m
+        else
+            tmux send-keys -t ${SESSION_NAME}:$TMUX_WIN "make start_server" C-m
+        fi
     fi
+    
     ((TMUX_WIN++))
 done
 
